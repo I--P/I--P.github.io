@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to TestDoc’s documentation! &mdash; TestDoc 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="TestDoc 1 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="#">TestDoc 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-testdoc-s-documentation">
+<h1>Welcome to TestDoc&#8217;s documentation!<a class="headerlink" href="#welcome-to-testdoc-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<dl class="function">
+<dt id="ltisys.controller_hessenberg">
+<tt class="descclassname">ltisys.</tt><tt class="descname">controller_hessenberg</tt><big>(</big><em>A</em>, <em>B</em>, <em>C=None</em><big>)</big><a class="headerlink" href="#ltisys.controller_hessenberg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduce the linear system <span class="math">\(AX+BU\)</span> to its controller Hessenberg form.</p>
+<p>Find an orthogonnal similarity transformation P and reduce the linear
+system <span class="math">\(AX+BU\)</span> to the controller Hessenberg form 
+<span class="math">\(\bar A, \bar B, \bar C\)</span> (Abar, Bbar, Cbar) where:</p>
+<div class="math">
+\[\begin{split}\begin{array}{lcl} P A P^T &amp;=&amp; \bar A \\
+                    P B &amp;=&amp; \bar B\end{array}\end{split}\]</div>
+<p>The new system has the following form:</p>
+<div class="math">
+\[\begin{split}\bar A = \left[ \begin{array}{cc}
+                H_c &amp; H_{xx} \\
+                0 &amp; H_{nc}
+                \end{array} \right]\end{split}\]</div>
+<p><span class="math">\(\bar A\)</span> is a block upper Hessenberg matrix hence the <cite>H</cite> prefix used
+for its blocks.</p>
+<div class="math">
+\[\begin{split}\bar B = \left [ \begin{array}{c} B_c \\ 0 \end{array} \right ]\end{split}\]</div>
+<p><span class="math">\(H_c, B_c\)</span> is the controllable part of the original system and
+<span class="math">\(AX+BU\)</span> is controllable if <span class="math">\(\bar A\)</span> is of full rank. If the
+real part of the eigenvalues of <span class="math">\(H_{nc}\)</span> are negative the system
+will be stabilizable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>A, B</strong> : ndarray</p>
+<blockquote>
+<div><p>State-space representation of linear system <span class="math">\(AX+BU\)</span>.</p>
+</div></blockquote>
+<p><strong>C</strong> : ndarray, optionnal</p>
+<blockquote>
+<div><p>The output matrix of the linear system (i.e <span class="math">\(Y=CX\)</span>).
+Default is None.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Abar, Bbar</strong> : ndarray</p>
+<blockquote>
+<div><p>The controller Hessenberg form of the linear system <span class="math">\(AX+BU\)</span></p>
+</div></blockquote>
+<p><strong>Cbar</strong> : ndarray</p>
+<blockquote>
+<div><p>Optionnaly if C (output matrix) is given the function will also return
+<span class="math">\(\bar C = C P\)</span> otherwise <cite>Cbar = None</cite> will be returned.
+Cbar has the following form:</p>
+<blockquote>
+<div><div class="math">
+\[\begin{split}\bar C = \left[ \begin{array}{cc}
+                C_c &amp; C_{nc}
+                \end{array} \right]\end{split}\]</div>
+</div></blockquote>
+<p>With <span class="math">\(C_c\)</span> such that the transfer function of (A,B,C) and
+(Hc,Bc,Cc) are the same.</p>
+</div></blockquote>
+<p><strong>P</strong> : ndarray</p>
+<blockquote>
+<div><p>The orthogonnal similarity transformation</p>
+</div></blockquote>
+<p><strong>control_index</strong> : int</p>
+<blockquote class="last">
+<div><p>The controllability index, i.e the number of controllable states, of
+the linear system <span class="math">\(AX+BU\)</span>. If <tt class="docutils literal"><span class="pre">control_index==A.shape[0]</span></tt> then
+the linear system is controllable. Control_index is also the rank of 
+<span class="math">\(\bar A\)</span>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The algorithm comes from <a class="reference internal" href="#r1" id="id1">[R1]</a>. The output from this function has been tested
+with random controllable and uncontrollable system against Octave which
+uses tb01ud from Slicot and all results were similar using the default
+tolerances of <cite>allcose</cite>.</p>
+<p class="rubric">References</p>
+<table class="docutils citation" frame="void" id="r1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[R1]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>)</em> Datta Biswa, &#8220;Numerical Methods for Linear Control Systems&#8221;,
+Elsevier, pp 173-183, 2003.</td></tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ltisys.controllability_matrix">
+<tt class="descclassname">ltisys.</tt><tt class="descname">controllability_matrix</tt><big>(</big><em>A</em>, <em>B</em><big>)</big><a class="headerlink" href="#ltisys.controllability_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the controllability matrix of the linear system <span class="math">\(AX+BU\)</span>.</p>
+<p>Compute the controllability matrix of the linear system <span class="math">\(AX+BU\)</span>.
+If a linear system is controllable it is possible to find a set of inputs
+U such as any configuration of the state-vector X is reachable in finite
+time starting from any other configuration.
+If the rank of the controllability matrix is not equal to the dimension of
+the state-space the system is not controllable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>A, B</strong> : ndarray</p>
+<blockquote>
+<div><p>State-space representation of linear system <span class="math">\(AX+BU\)</span>.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Ctrb_mat</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>The controllability matrix</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Even if the rank of the controllability matrix equals the dimension of the
+state-space the system might be very difficult, if not impossible, to 
+control, its condition number should also be checked. <strong>One should only
+rely on the rank of this matrix for educational purposes due to the
+numerical instability of this computation.</strong>
+For serious control design <cite>controller_hessenberg</cite> is the way to go.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ltisys.observability_matrix">
+<tt class="descclassname">ltisys.</tt><tt class="descname">observability_matrix</tt><big>(</big><em>A</em>, <em>C</em><big>)</big><a class="headerlink" href="#ltisys.observability_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the observability matrix of a linear system.</p>
+<p>Compute the observability matrix of the linear system:</p>
+<div class="math">
+\[\begin{split}\begin{array}{lcl} \dot X &amp;=&amp; A X + B U \\
+                            Y &amp;=&amp; C X \end{array}\end{split}\]</div>
+<p>If a linear system is observable it is possible to reconstruct its internal
+state by measuring its outputs Y.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>A, C</strong> : ndarray</p>
+<blockquote>
+<div><p>State-space representation of linear system</p>
+<div class="math">
+\[\begin{split}\begin{array}{lcl} \dot X &amp;=&amp; A X + B U \\
+                            Y &amp;=&amp; C X \end{array}\end{split}\]</div>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Obsv_mat</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>The observability matrix</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Even if the rank of the observability matrix equals the dimension of the
+state-space the system might be very difficult, if not impossible, to 
+observe, its condition number should also be checked. <strong>One should only
+rely on the rank of this matrix for educational purposes due to the
+numerical instability of this computation.</strong></p>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to TestDoc&#8217;s documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="#">TestDoc 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, O.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
