@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to TestDoc’s documentation! &mdash; TestDoc 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="TestDoc 1 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="#">TestDoc 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-testdoc-s-documentation">
+<h1>Welcome to TestDoc&#8217;s documentation!<a class="headerlink" href="#welcome-to-testdoc-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<dl class="function">
+<dt id="ltisys.controller_hessenberg">
+<tt class="descclassname">ltisys.</tt><tt class="descname">controller_hessenberg</tt><big>(</big><em>A</em>, <em>B</em>, <em>C=None</em><big>)</big><a class="headerlink" href="#ltisys.controller_hessenberg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduce the linear system <tt class="docutils literal"><span class="pre">AX</span> <span class="pre">+</span> <span class="pre">BU</span></tt> to its controller Hessenberg form.</p>
+<p>Reduce the linear system <tt class="docutils literal"><span class="pre">AX</span> <span class="pre">+</span> <span class="pre">BU</span></tt> to the controller Hessenberg form
+H, Bbar where <tt class="docutils literal"><span class="pre">P*A*P.T</span> <span class="pre">=</span> <span class="pre">H</span></tt> and <tt class="docutils literal"><span class="pre">P*B</span> <span class="pre">=</span> <span class="pre">Bbar</span></tt> with P being an
+orthogonnal similarity transformation.</p>
+<p>The new system has the following form:</p>
+<p>H is a block upper Hessenberg matrix.</p>
+<p>Hc,Bc is the controllable part of the original system and <tt class="docutils literal"><span class="pre">AX</span> <span class="pre">+</span> <span class="pre">BU</span></tt> is
+controllable if H is of full rank. If the real part of the eigenvalues of
+Hnc are negative the system will be stabilizable.</p>
+<dl class="docutils">
+<dt>A, B <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd>State-space representation of linear system <tt class="docutils literal"><span class="pre">AX</span> <span class="pre">+</span> <span class="pre">BU</span></tt>.</dd>
+<dt>C <span class="classifier-delimiter">:</span> <span class="classifier">ndarray, optionnal</span></dt>
+<dd>The output matrix of the linear system (i.e <tt class="docutils literal"><span class="pre">Y</span> <span class="pre">=</span> <span class="pre">CX</span></tt>).
+Default is None.</dd>
+</dl>
+<dl class="docutils">
+<dt>H, Bbar <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd>The controller Hessenberg form of the linear system <tt class="docutils literal"><span class="pre">AX</span> <span class="pre">+</span> <span class="pre">BU</span></tt></dd>
+<dt>Cbar <span class="classifier-delimiter">:</span> <span class="classifier">ndarray    </span></dt>
+<dd><p class="first">Optionnaly if C (output matrix) is given the function will also return
+<tt class="docutils literal"><span class="pre">Cbar</span> <span class="pre">=</span> <span class="pre">C*P</span></tt> otherwise Cbar = None will be returned. Cbar has the
+following form:</p>
+<blockquote>
+<div></div></blockquote>
+<p class="last">With Cc such that the transfer function of (A,B,C) and (Hc,Bc,Cc) are
+the same.</p>
+</dd>
+<dt>P <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd>The orthogonnal similarity transformation</dd>
+<dt>control_index <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>The controllability index, i.e the number of controllable states, of
+the linear system <tt class="docutils literal"><span class="pre">AX</span> <span class="pre">+</span> <span class="pre">BU</span></tt>. If <tt class="docutils literal"><span class="pre">control_index==A.shape[0]</span></tt> then
+the linear system is controllable. Control_index is also the rank of H.</dd>
+</dl>
+<p>The algorithm comes from <a class="footnote-reference" href="#id2" id="id1">[1]</a>. The output from this function has been tested
+with random controllable and uncontrollable system against Octave which
+uses tb01ud from Slicot and all results were similar using the default
+tolerances of <cite>allcose</cite>.</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Datta Biswa, &#8220;Numerical Methods for Linear Control Systems&#8221;,
+Elsevier, pp 173-183, 2003.</td></tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to TestDoc&#8217;s documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="#">TestDoc 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, O.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

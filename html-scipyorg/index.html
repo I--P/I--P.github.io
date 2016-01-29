@@ -88,52 +88,72 @@ Default is None.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Abar, Bbar</strong> : ndarray</p>
-<blockquote>
-<div><p>The controller Hessenberg form of the linear system <span class="math">\(AX+BU\)</span></p>
-</div></blockquote>
-<p><strong>Cbar</strong> : ndarray</p>
-<blockquote>
-<div><p>Optionnaly if C (output matrix) is given the function will also return
-<span class="math">\(\bar C = C P\)</span> otherwise <cite>Cbar = None</cite> will be returned.
-Cbar has the following form:</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>hessenberg_form</strong> : Bunch object</p>
+<blockquote class="last">
+<div><dl class="docutils">
+<dt>hessenberg_form is composed of:</dt>
+<dd><dl class="first last docutils">
+<dt>Abar, Bbar <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd><p class="first last">The controller Hessenberg form of the linear system
+<span class="math">\(AX+BU\)</span></p>
+</dd>
+<dt>Cbar <span class="classifier-delimiter">:</span> <span class="classifier">ndarray    </span></dt>
+<dd><p class="first">Optionnaly if C (output matrix) is given the function will also
+return <span class="math">\(\bar C = C P\)</span> otherwise <cite>Cbar = None</cite> will be
+returned. Cbar has the following form:</p>
 <blockquote>
 <div><div class="math">
 \[\begin{split}\bar C = \left[ \begin{array}{cc}
                 C_c &amp; C_{nc}
                 \end{array} \right]\end{split}\]</div>
 </div></blockquote>
-<p>With <span class="math">\(C_c\)</span> such that the transfer function of (A,B,C) and
+<p class="last">With <span class="math">\(C_c\)</span> such that the transfer function of (A,B,C) and
 (Hc,Bc,Cc) are the same.</p>
-</div></blockquote>
-<p><strong>P</strong> : ndarray</p>
-<blockquote>
-<div><p>The orthogonnal similarity transformation</p>
-</div></blockquote>
-<p><strong>control_index</strong> : int</p>
-<blockquote class="last">
-<div><p>The controllability index, i.e the number of controllable states, of
-the linear system <span class="math">\(AX+BU\)</span>. If <tt class="docutils literal"><span class="pre">control_index==A.shape[0]</span></tt> then
-the linear system is controllable. Control_index is also the rank of 
-<span class="math">\(\bar A\)</span>.</p>
+</dd>
+<dt>P <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd><p class="first last">The orthogonnal similarity transformation</p>
+</dd>
+<dt>control_index <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">The controllability index, i.e the number of controllable
+states, of the linear system <span class="math">\(AX+BU\)</span>. If
+<tt class="docutils literal"><span class="pre">control_index==A.shape[0]</span></tt> then the linear system is
+controllable. Control_index is also the rank of math:<cite>bar A</cite>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </div></blockquote>
 </td>
 </tr>
 </tbody>
 </table>
-<p class="rubric">Notes</p>
-<p>The algorithm comes from <a class="reference internal" href="#r1" id="id1">[R1]</a>. The output from this function has been tested
-with random controllable and uncontrollable system against Octave which
-uses tb01ud from Slicot and all results were similar using the default
-tolerances of <cite>allcose</cite>.</p>
 <p class="rubric">References</p>
 <table class="docutils citation" frame="void" id="r1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[R1]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>)</em> Datta Biswa, &#8220;Numerical Methods for Linear Control Systems&#8221;,
+<tr><td class="label"><a class="fn-backref" href="#id1">[R1]</a></td><td>Datta Biswa, &#8220;Numerical Methods for Linear Control Systems&#8221;,
 Elsevier, pp 173-183, 2003.</td></tr>
 </tbody>
 </table>
+<p class="rubric">Examples</p>
+<p>A simple example demonstrating how to check the control index of a linear
+system.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">signal</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mf">1.380</span><span class="p">,</span>  <span class="o">-</span><span class="mf">0.2077</span><span class="p">,</span>  <span class="mf">6.715</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.676</span>  <span class="p">],</span>
+<span class="gp">... </span>              <span class="p">[</span><span class="o">-</span><span class="mf">0.5814</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.290</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>      <span class="mf">0.6750</span> <span class="p">],</span>
+<span class="gp">... </span>              <span class="p">[</span> <span class="mf">1.067</span><span class="p">,</span>   <span class="mf">4.273</span><span class="p">,</span>  <span class="o">-</span><span class="mf">6.654</span><span class="p">,</span>  <span class="mf">5.893</span>  <span class="p">],</span>
+<span class="gp">... </span>              <span class="p">[</span> <span class="mf">0.0480</span><span class="p">,</span>  <span class="mf">4.273</span><span class="p">,</span>   <span class="mf">1.343</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.104</span>  <span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mi">0</span><span class="p">,</span>      <span class="mf">5.679</span> <span class="p">],</span>
+<span class="gp">... </span>              <span class="p">[</span> <span class="mf">1.136</span><span class="p">,</span>  <span class="mf">1.136</span> <span class="p">],</span>
+<span class="gp">... </span>              <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>    <span class="p">],</span>
+<span class="gp">... </span>              <span class="p">[</span><span class="o">-</span><span class="mf">3.146</span><span class="p">,</span>  <span class="mi">0</span>     <span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hessenberg_form</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">controller_hessenberg</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hessenberg_form</span><span class="o">.</span><span class="n">control_index</span>
+<span class="go">4</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
