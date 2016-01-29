@@ -54,7 +54,7 @@
 <tt class="descclassname">ltisys.</tt><tt class="descname">controller_hessenberg</tt><big>(</big><em>A</em>, <em>B</em>, <em>C=None</em><big>)</big><a class="headerlink" href="#ltisys.controller_hessenberg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reduce the linear system <span class="math">\(AX+BU\)</span> to its controller Hessenberg form.</p>
 <p>Find an orthogonnal similarity transformation P and reduce the linear
-system <span class="math">\(AX+BU\)</span> to the controller Hessenberg form 
+system <span class="math">\(AX+BU\)</span> to the controller Hessenberg form
 <span class="math">\(\bar A, \bar B, \bar C\)</span> (Abar, Bbar, Cbar) where:</p>
 <div class="math">
 \[\begin{split}\begin{array}{lcl} P A P^T &amp;=&amp; \bar A \\
@@ -97,7 +97,7 @@ Default is None.</p>
 <dd><p class="first last">The controller Hessenberg form of the linear system
 <span class="math">\(AX+BU\)</span></p>
 </dd>
-<dt>Cbar <span class="classifier-delimiter">:</span> <span class="classifier">ndarray    </span></dt>
+<dt>Cbar <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
 <dd><p class="first">Optionnaly if C (output matrix) is given the function will also
 return <span class="math">\(\bar C = C P\)</span> otherwise <cite>Cbar = None</cite> will be
 returned. Cbar has the following form:</p>
@@ -186,7 +186,7 @@ the state-space the system is not controllable.</p>
 </table>
 <p class="rubric">Notes</p>
 <p>Even if the rank of the controllability matrix equals the dimension of the
-state-space the system might be very difficult, if not impossible, to 
+state-space the system might be very difficult, if not impossible, to
 control, its condition number should also be checked. <strong>One should only
 rely on the rank of this matrix for educational purposes due to the
 numerical instability of this computation.</strong>
@@ -226,7 +226,7 @@ state by measuring its outputs Y.</p>
 </table>
 <p class="rubric">Notes</p>
 <p>Even if the rank of the observability matrix equals the dimension of the
-state-space the system might be very difficult, if not impossible, to 
+state-space the system might be very difficult, if not impossible, to
 observe, its condition number should also be checked. <strong>One should only
 rely on the rank of this matrix for educational purposes due to the
 numerical instability of this computation.</strong></p>
